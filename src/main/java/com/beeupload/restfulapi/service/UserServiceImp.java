@@ -1,5 +1,6 @@
 package com.beeupload.restfulapi.service;
 
+import com.beeupload.restfulapi.dto.UserDTO;
 import com.beeupload.restfulapi.dto.UserLoginDTO;
 import com.beeupload.restfulapi.dto.UserSignUpDTO;
 import com.beeupload.restfulapi.exception.EmailExistsException;
@@ -41,6 +42,11 @@ public class UserServiceImp implements UserService {
         }
         User model = userRepository.save(user.toModel());
         return new UserSignUpDTO().toDTO(model);
+    }
+
+    @Override
+    public UserDTO getUserLog(UserLoginDTO user) {
+        return new UserDTO().toDTO(userRepository.findUserByUsername(user.getUsername()));
     }
 
 }
