@@ -25,15 +25,15 @@ public class UserController {
     public ResponseEntity<?> login(@PathVariable String username, @PathVariable String password){
         UserLoginDTO user = userService.login(username, password);
         if (user != null){
-            return ResponseEntity.status(HttpStatus.OK).body(user);
+            return ResponseEntity.status(HttpStatus.OK).body(userService.getUserLog(user));
         }else{
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
 
-    @PostMapping("/register")
-    @Operation(summary = "Register")
-    public ResponseEntity<?> register(@RequestBody UserSignUpDTO account){
+    @PostMapping("/signup")
+    @Operation(summary = "Sign Up")
+    public ResponseEntity<?> signUp(@RequestBody UserSignUpDTO account){
         try{
             UserSignUpDTO user = userService.signUp(account);
             return ResponseEntity.status(HttpStatus.OK).body(user);

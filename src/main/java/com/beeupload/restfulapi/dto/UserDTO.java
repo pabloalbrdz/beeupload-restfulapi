@@ -4,14 +4,20 @@ import com.beeupload.restfulapi.model.User;
 import lombok.Data;
 
 @Data
-public class UserLoginDTO {
+public class UserDTO {
+
+    private long id;
 
     private String username;
 
+    private String email;
+
     private String password;
 
-    public UserLoginDTO toDTO(User user){
+    public UserDTO toDTO(User user){
+        this.setId(user.getId());
         this.setUsername(user.getUsername());
+        this.setEmail(user.getEmail());
         this.setPassword(user.getPassword());
 
         return this;
@@ -19,7 +25,9 @@ public class UserLoginDTO {
 
     public User toModel(){
         User model = new User();
+        model.setId(this.getId());
         model.setUsername(this.getUsername());
+        model.setEmail(this.getEmail());
         model.setPassword(this.getPassword());
 
         return model;
