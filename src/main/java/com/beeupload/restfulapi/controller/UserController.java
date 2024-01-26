@@ -22,7 +22,7 @@ public class UserController {
 
     @GetMapping("/login/{username}/{password}")
     @Operation(summary = "Login")
-    public ResponseEntity<?> login(@PathVariable String username, @PathVariable String password){
+    public ResponseEntity<?> login(@PathVariable String username, @PathVariable String password) throws Exception{
         UserLoginDTO user = userService.login(username, password);
         if (user != null){
             return ResponseEntity.status(HttpStatus.OK).body(userService.getUserLog(user));
@@ -33,7 +33,7 @@ public class UserController {
 
     @PostMapping("/signup")
     @Operation(summary = "Sign Up")
-    public ResponseEntity<?> signUp(@RequestBody UserSignUpDTO account){
+    public ResponseEntity<?> signUp(@RequestBody UserSignUpDTO account) throws Exception{
         try{
             UserSignUpDTO user = userService.signUp(account);
             return ResponseEntity.status(HttpStatus.OK).body(user);
