@@ -3,7 +3,7 @@ package com.beeupload.restfulapi.exception;
 public class EmailExistsException extends Exception{
 
     public EmailExistsException(){
-        super("SU03");
+        super("Error: Correo electronico en uso.");
     }
 
 }
