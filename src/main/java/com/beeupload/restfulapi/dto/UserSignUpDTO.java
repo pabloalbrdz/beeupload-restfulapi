@@ -6,6 +6,8 @@ import lombok.Data;
 @Data
 public class UserSignUpDTO {
 
+    private long id;
+
     private String username;
 
     private String email;
@@ -13,6 +15,7 @@ public class UserSignUpDTO {
     private String password;
 
     public UserSignUpDTO toDTO(User user){
+        this.setId(user.getId());
         this.setUsername(user.getUsername());
         this.setEmail(user.getEmail());
         this.setPassword(user.getPassword());
@@ -22,6 +25,7 @@ public class UserSignUpDTO {
 
     public User toModel(){
         User model = new User();
+        model.setId(this.getId());
         model.setUsername(this.getUsername());
         model.setEmail(this.getEmail());
         model.setPassword(this.getPassword());
