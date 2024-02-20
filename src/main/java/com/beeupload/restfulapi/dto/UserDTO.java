@@ -8,17 +8,17 @@ public class UserDTO {
 
     private long id;
 
-    private String username;
+    // private String username;
 
-    private String email;
+    // private String email;
 
-    private String password;
+    // private String password;
 
     public UserDTO toDTO(User user){
         this.setId(user.getId());
-        this.setUsername(user.getUsername());
-        this.setEmail(user.getEmail());
-        this.setPassword(user.getPassword());
+        // this.setUsername(user.getUsername());
+        // this.setEmail(user.getEmail());
+        // this.setPassword(user.getPassword());
 
         return this;
     }
@@ -26,9 +26,9 @@ public class UserDTO {
     public User toModel(){
         User model = new User();
         model.setId(this.getId());
-        model.setUsername(this.getUsername());
-        model.setEmail(this.getEmail());
-        model.setPassword(this.getPassword());
+        // model.setUsername(this.getUsername());
+        // model.setEmail(this.getEmail());
+        // model.setPassword(this.getPassword());
 
         return model;
     }
