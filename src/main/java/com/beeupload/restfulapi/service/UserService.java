@@ -13,8 +13,6 @@ public interface UserService {
 
     UserDTO getUserLog(UserLoginDTO user);
 
-    UserDTO getUserById(long id);
-
     String getUserUsername(long id) throws UserNotFoundException;
 
     UserDTO updateUserUsername(long id, String newUsername) throws UserNotFoundException, UsernameExistsException;
@@ -26,5 +24,7 @@ public interface UserService {
     String getUserEmail(long id) throws UserNotFoundException;
 
     UserDTO updateUserEmail(long id, String newEmail) throws UserNotFoundException, EmailExistsException;
+
+    void deleteUser(long id) throws UserNotFoundException;
 
 }

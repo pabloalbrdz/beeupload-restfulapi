@@ -53,11 +53,6 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public UserDTO getUserById(long id) {
-        return new UserDTO().toDTO(userRepository.findById(id).get());
-    }
-
-    @Override
     public String getUserUsername(long id) throws UserNotFoundException {
         String username = userRepository.findUsernameById(id);
         if (username == null){
@@ -126,6 +121,15 @@ public class UserServiceImp implements UserService {
         user.setEmail(newEmail);
         userRepository.save(user);
         return new UserDTO().toDTO(user);
+    }
+
+    @Override
+    public void deleteUser(long id) throws UserNotFoundException {
+        boolean userIdAvaiable = userRepository.findById(id).isPresent();
+        if (!userIdAvaiable){
+            throw new UserNotFoundException();
+        }
+        userRepository.deleteById(id);
     }
 
 }
