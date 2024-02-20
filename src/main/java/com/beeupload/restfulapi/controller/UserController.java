@@ -1,11 +1,9 @@
 package com.beeupload.restfulapi.controller;
 
+import com.beeupload.restfulapi.dto.UserDTO;
 import com.beeupload.restfulapi.dto.UserLoginDTO;
 import com.beeupload.restfulapi.dto.UserSignUpDTO;
-import com.beeupload.restfulapi.exception.EmailExistsException;
-import com.beeupload.restfulapi.exception.UserNotFoundException;
-import com.beeupload.restfulapi.exception.UsernameAndEmailExistsException;
-import com.beeupload.restfulapi.exception.UsernameExistsException;
+import com.beeupload.restfulapi.exception.*;
 import com.beeupload.restfulapi.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -30,7 +28,7 @@ public class UserController {
         try{
             UserLoginDTO user = userService.login(username, password);
             return ResponseEntity.status(HttpStatus.OK).body(userService.getUserLog(user));
-        }catch (UserNotFoundException unf){
+        }catch (UserLoginNotFoundException unf){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(unf.getMessage());
         }
     }
@@ -45,6 +43,73 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(ueee.getMessage());
         }catch (UsernameExistsException uee){
             return ResponseEntity.status(HttpStatus.CONFLICT).body(uee.getMessage());
+        }catch (EmailExistsException eee){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(eee.getMessage());
+        }
+    }
+
+    @GetMapping("/getUserUsername/{id}")
+    @Operation(summary = "Get User Username By Id")
+    public ResponseEntity<String> getUserUsername(@PathVariable long id) throws Exception{
+        try{
+            return ResponseEntity.status(HttpStatus.OK).body(userService.getUserUsername(id));
+        }catch (UserNotFoundException unfe){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(unfe.getMessage());
+        }
+    }
+
+    @PutMapping("/updateUserUsername/{id}/{newUsername}")
+    @Operation(summary = "Update User Username By Id")
+    public ResponseEntity<?> updateUserUsername(@PathVariable long id, @PathVariable String newUsername) throws Exception{
+        try{
+            UserDTO user = userService.updateUserUsername(id, newUsername);
+            return ResponseEntity.status(HttpStatus.OK).body(user);
+        }catch (UserNotFoundException unfe){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(unfe.getMessage());
+        }catch (UsernameExistsException uee){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(uee.getMessage());
+        }
+    }
+
+    @GetMapping("/getUserPassword/{id}")
+    @Operation(summary = "Get User Password By Id")
+    public ResponseEntity<String> getUserPassword(@PathVariable long id) throws Exception{
+        try{
+            return ResponseEntity.status(HttpStatus.OK).body(userService.getUserPassword(id));
+        }catch (UserNotFoundException unfe){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(unfe.getMessage());
+        }
+    }
+
+    @PutMapping("/updateUserPassword/{id}/{newPassword}")
+    @Operation(summary = "Update User Password By Id")
+    public ResponseEntity<?> updateUserPassword(@PathVariable long id, @PathVariable String newPassword) throws Exception{
+        try{
+            UserDTO user = userService.updateUserPassword(id, newPassword);
+            return ResponseEntity.status(HttpStatus.OK).body(user);
+        }catch (UserNotFoundException unfe){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(unfe.getMessage());
+        }
+    }
+
+    @GetMapping("/getUserEmail/{id}")
+    @Operation(summary = "Get User Email By Id")
+    public ResponseEntity<String> getUserEmail(@PathVariable long id) throws Exception{
+        try{
+            return ResponseEntity.status(HttpStatus.OK).body(userService.getUserEmail(id));
+        }catch (UserNotFoundException unfe){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(unfe.getMessage());
+        }
+    }
+
+    @PutMapping("/updateUserEmail/{id}/{newEmail}")
+    @Operation(summary = "Update User Email By Id")
+    public ResponseEntity<?> updateUserEmail(@PathVariable long id, @PathVariable String newEmail) throws Exception{
+        try{
+            UserDTO user = userService.updateUserEmail(id, newEmail);
+            return ResponseEntity.status(HttpStatus.OK).body(user);
+        }catch (UserNotFoundException unfe){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(unfe.getMessage());
         }catch (EmailExistsException eee){
             return ResponseEntity.status(HttpStatus.CONFLICT).body(eee.getMessage());
         }
