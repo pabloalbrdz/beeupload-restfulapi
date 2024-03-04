@@ -87,6 +87,19 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
+    public boolean checkUserPassword(long id, String password) throws UserNotFoundException, Exception {
+        boolean userIdAvaiable = userRepository.findById(id).isPresent();
+        if (!userIdAvaiable){
+            throw new UserNotFoundException();
+        }
+        if (passwordEncrypt.encrypt(password).equals(userRepository.findPasswordById(id))){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    @Override
     public UserDTO updateUserPassword(long id, String newPassword) throws UserNotFoundException, Exception {
         boolean userIdAvaiable = userRepository.findById(id).isPresent();
         if (!userIdAvaiable){
