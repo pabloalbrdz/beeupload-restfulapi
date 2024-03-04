@@ -19,6 +19,8 @@ public interface UserService {
 
     String getUserPassword(long id) throws UserNotFoundException;
 
+    boolean checkUserPassword(long id, String password) throws UserNotFoundException, Exception;
+
     UserDTO updateUserPassword(long id, String newPassword) throws UserNotFoundException, Exception;
 
     String getUserEmail(long id) throws UserNotFoundException;

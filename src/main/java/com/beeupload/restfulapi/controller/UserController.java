@@ -81,6 +81,17 @@ public class UserController {
         }
     }
 
+    @GetMapping("/checkUserPassword/{id}/{password}")
+    @Operation(summary = "Check User Password")
+    public ResponseEntity<?> checkUserPassword(@PathVariable long id, @PathVariable String password) throws Exception{
+        try{
+           boolean result = userService.checkUserPassword(id, password);
+           return ResponseEntity.status(HttpStatus.OK).body(result);
+        }catch (UserNotFoundException unfe){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(unfe.getMessage());
+        }
+    }
+
     @PutMapping("/updateUserPassword/{id}/{newPassword}")
     @Operation(summary = "Update User Password By Id")
     public ResponseEntity<?> updateUserPassword(@PathVariable long id, @PathVariable String newPassword) throws Exception{
