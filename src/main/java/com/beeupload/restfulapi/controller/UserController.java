@@ -22,11 +22,11 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/login/{username}/{password}")
+    @PostMapping("/login")
     @Operation(summary = "User Login")
-    public ResponseEntity<?> login(@PathVariable String username, @PathVariable String password) throws Exception{
+    public ResponseEntity<?> login(@RequestBody UserLoginDTO account) throws Exception{
         try{
-            UserLoginDTO user = userService.login(username, password);
+            UserLoginDTO user = userService.login(account);
             return ResponseEntity.status(HttpStatus.OK).body(userService.getUserLog(user));
         }catch (UserLoginNotFoundException unf){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(unf.getMessage());

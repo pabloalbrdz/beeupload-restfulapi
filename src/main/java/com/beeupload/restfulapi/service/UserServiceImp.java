@@ -20,10 +20,10 @@ public class UserServiceImp implements UserService {
     private PasswordEncrypt passwordEncrypt;
 
     @Override
-    public UserLoginDTO login(String username, String password) throws UserLoginNotFoundException, Exception {
-        boolean existUser = userRepository.findUserByUsernameAndPassword(username, passwordEncrypt.encrypt(password)).isPresent();
+    public UserLoginDTO login(UserLoginDTO user) throws UserLoginNotFoundException, Exception {
+        boolean existUser = userRepository.findUserByUsernameAndPassword(user.getUsername(), passwordEncrypt.encrypt(user.getPassword())).isPresent();
         if (existUser){
-            return new UserLoginDTO().toDTO(userRepository.findUserByUsernameAndPassword(username, passwordEncrypt.encrypt(password)).get());
+            return new UserLoginDTO().toDTO(userRepository.findUserByUsernameAndPassword(user.getUsername(), passwordEncrypt.encrypt(user.getPassword())).get());
         }else{
             throw new UserLoginNotFoundException();
         }
