@@ -1,8 +1,8 @@
 package com.beeupload.restfulapi.service;
 
-import com.beeupload.restfulapi.dto.UserDTO;
-import com.beeupload.restfulapi.dto.UserLoginDTO;
-import com.beeupload.restfulapi.dto.UserSignUpDTO;
+import com.beeupload.restfulapi.dto.user.UserDTO;
+import com.beeupload.restfulapi.dto.user.UserLoginDTO;
+import com.beeupload.restfulapi.dto.user.UserSignUpDTO;
 import com.beeupload.restfulapi.exception.*;
 import com.beeupload.restfulapi.model.User;
 import com.beeupload.restfulapi.repository.UserRepository;

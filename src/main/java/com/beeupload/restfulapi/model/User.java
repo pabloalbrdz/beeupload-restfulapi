@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -16,7 +17,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long userid;
 
     @Column
     private String username;
@@ -27,8 +28,11 @@ public class User {
     @Column
     private String password;
 
+    @ManyToMany(mappedBy = "users")
+    private List<Image> images;
+
     public User(long id, String username) {
-        this.id = id;
+        this.userid = id;
         this.username = username;
     }
 
