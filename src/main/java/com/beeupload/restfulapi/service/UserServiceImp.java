@@ -19,6 +19,18 @@ public class UserServiceImp implements UserService {
     @Autowired
     private PasswordEncrypt passwordEncrypt;
 
+    @Autowired
+    DocumentService documentService;
+
+    @Autowired
+    ImageService imageService;
+
+    @Autowired
+    MusicService musicService;
+
+    @Autowired
+    VideoService videoService;
+
     @Override
     public UserLoginDTO login(UserLoginDTO user) throws UserLoginNotFoundException, Exception {
         boolean existUser = userRepository.findUserByUsernameAndPassword(user.getUsername(), passwordEncrypt.encrypt(user.getPassword())).isPresent();
@@ -137,11 +149,15 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public void deleteUser(long id) throws UserNotFoundException {
+    public void deleteUser(long id) throws UserNotFoundException, DocumentNotFoundException, ImageNotFoundException, MusicNotFoundException, VideoNotFoundException {
         boolean userIdAvaiable = userRepository.findById(id).isPresent();
         if (!userIdAvaiable){
             throw new UserNotFoundException();
         }
+        documentService.deleteAllUserDocuments(id);
+        imageService.deleteAllUserImages(id);
+        musicService.deleteAllUserMusic(id);
+        videoService.deleteAllUserVideos(id);
         userRepository.deleteById(id);
     }
 

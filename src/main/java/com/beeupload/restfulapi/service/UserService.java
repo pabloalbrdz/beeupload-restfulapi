@@ -27,6 +27,6 @@ public interface UserService {
 
     UserDTO updateUserEmail(long id, String newEmail) throws UserNotFoundException, EmailExistsException;
 
-    void deleteUser(long id) throws UserNotFoundException;
+    void deleteUser(long id) throws UserNotFoundException, DocumentNotFoundException, ImageNotFoundException, MusicNotFoundException, VideoNotFoundException;
 
 }

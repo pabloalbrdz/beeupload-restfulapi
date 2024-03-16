@@ -134,6 +134,14 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.OK).build();
         }catch (UserNotFoundException unfe){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(unfe.getMessage());
+        }catch (DocumentNotFoundException dnfe){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(dnfe.getMessage());
+        }catch (ImageNotFoundException infe){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(infe.getMessage());
+        }catch (MusicNotFoundException mnfe){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(mnfe.getMessage());
+        }catch (VideoNotFoundException vnfe){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(vnfe.getMessage());
         }
     }
 
