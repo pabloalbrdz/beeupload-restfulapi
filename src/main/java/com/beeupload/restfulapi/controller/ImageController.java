@@ -31,12 +31,35 @@ public class ImageController {
         }
     }
 
+    @GetMapping("/getAllImagesById/{userid}")
+    @Operation(summary = "Get All Images By User Id")
+    public ResponseEntity<?> getAllUserImages(@PathVariable long userid){
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(imageService.getAllUserImages(userid));
+        }catch (UserNotFoundException unfe){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(unfe.getMessage());
+        }
+    }
+
     @DeleteMapping("/deleteImage/{id}")
     @Operation(summary = "Delete Image By Id")
     public ResponseEntity<?> deleteImage(@PathVariable long id){
         try {
             imageService.deleteImage(id);
             return ResponseEntity.status(HttpStatus.OK).build();
+        }catch (ImageNotFoundException infe){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(infe.getMessage());
+        }
+    }
+
+    @DeleteMapping("/deleteAllUserImages/{userid}")
+    @Operation(summary = "Delete All Images By User Id")
+    public ResponseEntity<?> deleteAllUserImages(@PathVariable long userid){
+        try {
+            imageService.deleteAllUserImages(userid);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }catch (UserNotFoundException unfe){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(unfe.getMessage());
         }catch (ImageNotFoundException infe){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(infe.getMessage());
         }

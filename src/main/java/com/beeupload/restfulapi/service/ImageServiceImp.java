@@ -41,6 +41,24 @@ public class ImageServiceImp implements ImageService {
     }
 
     @Override
+    public List<ImageDataDTO> getAllUserImages(long userid) throws UserNotFoundException {
+        boolean existUser = userRepository.findById(userid).isPresent();
+        if (existUser){
+            User user = userRepository.findById(userid).get();
+            List<Image> getAllImages = imageRepository.findAll();
+            List<Image> getAllUserImages = new ArrayList<>();
+            for (Image image : getAllImages){
+                if (image.getUsers().contains(user)){
+                    getAllUserImages.add(image);
+                }
+            }
+            return ImageDataDTO.toDTOList(getAllUserImages);
+        }else{
+            throw new UserNotFoundException();
+        }
+    }
+
+    @Override
     public void deleteImage(long id) throws ImageNotFoundException {
         boolean existImage = imageRepository.findById(id).isPresent();
         if (existImage){
@@ -50,6 +68,19 @@ public class ImageServiceImp implements ImageService {
             imageRepository.deleteById(id);
         }else{
             throw new ImageNotFoundException();
+        }
+    }
+
+    @Override
+    public void deleteAllUserImages(long userid) throws UserNotFoundException, ImageNotFoundException {
+        boolean existUser = userRepository.findById(userid).isPresent();
+        if (existUser){
+            List<ImageDataDTO> getAllUserImages = getAllUserImages(userid);
+            for (ImageDataDTO image : getAllUserImages){
+                deleteImage(image.getId());
+            }
+        }else{
+            throw new UserNotFoundException();
         }
     }
 

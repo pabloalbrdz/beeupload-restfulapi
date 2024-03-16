@@ -3,6 +3,9 @@ package com.beeupload.restfulapi.dto.image;
 import com.beeupload.restfulapi.model.Image;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 public class ImageDataDTO {
 
@@ -23,6 +26,14 @@ public class ImageDataDTO {
         model.setPath(this.getPath());
 
         return model;
+    }
+
+    public static List<ImageDataDTO> toDTOList(List<Image> imageList){
+        List<ImageDataDTO> imageDTOList = new ArrayList<>();
+        for (Image image : imageList){
+            imageDTOList.add(new ImageDataDTO().toDTO(image));
+        }
+        return imageDTOList;
     }
 
 }
