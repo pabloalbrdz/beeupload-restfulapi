@@ -8,15 +8,15 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Entity
-@Table(name = "videos")
+@Table(name = "documents")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Video {
+public class Document {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long videoid;
+    private long documentid;
 
     @Column
     private String name;
@@ -25,8 +25,8 @@ public class Video {
     private String path;
 
     @JoinTable(
-            name = "rel_videos_users",
-            joinColumns = @JoinColumn(name = "videoid", nullable = false),
+            name = "rel_documents_users",
+            joinColumns = @JoinColumn(name = "documentid", nullable = false),
             inverseJoinColumns = @JoinColumn(name = "userid", nullable = false)
     )
     @ManyToMany(cascade = CascadeType.ALL)
