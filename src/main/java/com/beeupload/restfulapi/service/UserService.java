@@ -1,8 +1,8 @@
 package com.beeupload.restfulapi.service;
 
-import com.beeupload.restfulapi.dto.UserDTO;
-import com.beeupload.restfulapi.dto.UserLoginDTO;
-import com.beeupload.restfulapi.dto.UserSignUpDTO;
+import com.beeupload.restfulapi.dto.user.UserDTO;
+import com.beeupload.restfulapi.dto.user.UserLoginDTO;
+import com.beeupload.restfulapi.dto.user.UserSignUpDTO;
 import com.beeupload.restfulapi.exception.*;
 
 public interface UserService {
@@ -27,6 +27,6 @@ public interface UserService {
 
     UserDTO updateUserEmail(long id, String newEmail) throws UserNotFoundException, EmailExistsException;
 
-    void deleteUser(long id) throws UserNotFoundException;
+    void deleteUser(long id) throws UserNotFoundException, DocumentNotFoundException, ImageNotFoundException, MusicNotFoundException, VideoNotFoundException;
 
 }

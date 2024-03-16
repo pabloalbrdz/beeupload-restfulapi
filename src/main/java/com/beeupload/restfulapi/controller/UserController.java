@@ -1,8 +1,8 @@
 package com.beeupload.restfulapi.controller;
 
-import com.beeupload.restfulapi.dto.UserDTO;
-import com.beeupload.restfulapi.dto.UserLoginDTO;
-import com.beeupload.restfulapi.dto.UserSignUpDTO;
+import com.beeupload.restfulapi.dto.user.UserDTO;
+import com.beeupload.restfulapi.dto.user.UserLoginDTO;
+import com.beeupload.restfulapi.dto.user.UserSignUpDTO;
 import com.beeupload.restfulapi.exception.*;
 import com.beeupload.restfulapi.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -134,6 +134,14 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.OK).build();
         }catch (UserNotFoundException unfe){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(unfe.getMessage());
+        }catch (DocumentNotFoundException dnfe){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(dnfe.getMessage());
+        }catch (ImageNotFoundException infe){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(infe.getMessage());
+        }catch (MusicNotFoundException mnfe){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(mnfe.getMessage());
+        }catch (VideoNotFoundException vnfe){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(vnfe.getMessage());
         }
     }
 

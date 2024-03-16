@@ -1,8 +1,8 @@
 package com.beeupload.restfulapi.service;
 
-import com.beeupload.restfulapi.dto.UserDTO;
-import com.beeupload.restfulapi.dto.UserLoginDTO;
-import com.beeupload.restfulapi.dto.UserSignUpDTO;
+import com.beeupload.restfulapi.dto.user.UserDTO;
+import com.beeupload.restfulapi.dto.user.UserLoginDTO;
+import com.beeupload.restfulapi.dto.user.UserSignUpDTO;
 import com.beeupload.restfulapi.exception.*;
 import com.beeupload.restfulapi.model.User;
 import com.beeupload.restfulapi.repository.UserRepository;
@@ -18,6 +18,18 @@ public class UserServiceImp implements UserService {
 
     @Autowired
     private PasswordEncrypt passwordEncrypt;
+
+    @Autowired
+    DocumentService documentService;
+
+    @Autowired
+    ImageService imageService;
+
+    @Autowired
+    MusicService musicService;
+
+    @Autowired
+    VideoService videoService;
 
     @Override
     public UserLoginDTO login(UserLoginDTO user) throws UserLoginNotFoundException, Exception {
@@ -137,11 +149,15 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public void deleteUser(long id) throws UserNotFoundException {
+    public void deleteUser(long id) throws UserNotFoundException, DocumentNotFoundException, ImageNotFoundException, MusicNotFoundException, VideoNotFoundException {
         boolean userIdAvaiable = userRepository.findById(id).isPresent();
         if (!userIdAvaiable){
             throw new UserNotFoundException();
         }
+        documentService.deleteAllUserDocuments(id);
+        imageService.deleteAllUserImages(id);
+        musicService.deleteAllUserMusic(id);
+        videoService.deleteAllUserVideos(id);
         userRepository.deleteById(id);
     }
 
