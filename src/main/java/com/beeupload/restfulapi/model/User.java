@@ -37,6 +37,9 @@ public class User {
     @ManyToMany(mappedBy = "users")
     private List<Document> documents;
 
+    @ManyToMany(mappedBy = "users")
+    private List<Music> musics;
+
     public User(long id, String username) {
         this.userid = id;
         this.username = username;
