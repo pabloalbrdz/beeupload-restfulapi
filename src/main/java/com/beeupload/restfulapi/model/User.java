@@ -31,6 +31,9 @@ public class User {
     @ManyToMany(mappedBy = "users")
     private List<Image> images;
 
+    @ManyToMany(mappedBy = "users")
+    private List<Video> videos;
+
     public User(long id, String username) {
         this.userid = id;
         this.username = username;
