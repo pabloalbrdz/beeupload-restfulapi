@@ -2,6 +2,7 @@ package com.beeupload.restfulapi.service;
 
 import com.beeupload.restfulapi.dto.image.ImageDTO;
 import com.beeupload.restfulapi.dto.image.ImageDataDTO;
+import com.beeupload.restfulapi.exception.ImageNotFoundException;
 import com.beeupload.restfulapi.exception.UserNotFoundException;
 import com.beeupload.restfulapi.model.Image;
 import com.beeupload.restfulapi.model.User;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -35,6 +37,19 @@ public class ImageServiceImp implements ImageService {
             return new ImageDataDTO().toDTO(image);
         }else{
             throw new UserNotFoundException();
+        }
+    }
+
+    @Override
+    public void deleteImage(long id) throws ImageNotFoundException {
+        boolean existImage = imageRepository.findById(id).isPresent();
+        if (existImage){
+            Image image = imageRepository.findById(id).get();
+            image.setUsers(Collections.emptyList());
+            imageRepository.save(image);
+            imageRepository.deleteById(id);
+        }else{
+            throw new ImageNotFoundException();
         }
     }
 
