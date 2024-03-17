@@ -11,6 +11,8 @@ public interface MusicService {
 
     MusicDataDTO saveMusic(MusicDTO musicDTO) throws UserNotFoundException;
 
+    MusicDataDTO updateMusicPath(long id, String path) throws MusicNotFoundException;
+
     List<MusicDataDTO> getAllUserMusic(long userid) throws UserNotFoundException;
 
     void deleteMusic(long id) throws MusicNotFoundException;

@@ -41,6 +41,19 @@ public class MusicServiceImp implements MusicService {
     }
 
     @Override
+    public MusicDataDTO updateMusicPath(long id, String path) throws MusicNotFoundException {
+        boolean existMusic = musicRepository.findById(id).isPresent();
+        if (existMusic){
+            Music music = musicRepository.findById(id).get();
+            music.setPath(path);
+            musicRepository.save(music);
+            return new MusicDataDTO().toDTO(music);
+        }else{
+            throw new MusicNotFoundException();
+        }
+    }
+
+    @Override
     public List<MusicDataDTO> getAllUserMusic(long userid) throws UserNotFoundException {
         boolean existUser = userRepository.findById(userid).isPresent();
         if (existUser){

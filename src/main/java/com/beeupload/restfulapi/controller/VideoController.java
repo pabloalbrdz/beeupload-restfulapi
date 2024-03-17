@@ -1,6 +1,7 @@
 package com.beeupload.restfulapi.controller;
 
 import com.beeupload.restfulapi.dto.video.VideoDTO;
+import com.beeupload.restfulapi.dto.video.VideoDataDTO;
 import com.beeupload.restfulapi.exception.VideoNotFoundException;
 import com.beeupload.restfulapi.exception.UserNotFoundException;
 import com.beeupload.restfulapi.service.VideoService;
@@ -28,6 +29,16 @@ public class VideoController {
             return ResponseEntity.status(HttpStatus.OK).body(videoService.saveVideo(video));
         }catch (UserNotFoundException unfe){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(unfe.getMessage());
+        }
+    }
+
+    @PutMapping("/updateVideoPath")
+    @Operation(summary = "Update Video Path")
+    public ResponseEntity<?> updateVideoPath(@RequestBody VideoDataDTO videoDataDTO){
+        try{
+            return ResponseEntity.status(HttpStatus.OK).body(videoService.updateVideoPath(videoDataDTO.getId(), videoDataDTO.getPath()));
+        }catch (VideoNotFoundException vnfe){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(vnfe.getMessage());
         }
     }
 

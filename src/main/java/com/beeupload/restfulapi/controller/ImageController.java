@@ -1,6 +1,7 @@
 package com.beeupload.restfulapi.controller;
 
 import com.beeupload.restfulapi.dto.image.ImageDTO;
+import com.beeupload.restfulapi.dto.image.ImageDataDTO;
 import com.beeupload.restfulapi.exception.ImageNotFoundException;
 import com.beeupload.restfulapi.exception.UserNotFoundException;
 import com.beeupload.restfulapi.service.ImageService;
@@ -28,6 +29,16 @@ public class ImageController {
             return ResponseEntity.status(HttpStatus.OK).body(imageService.saveImage(image));
         }catch (UserNotFoundException unfe){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(unfe.getMessage());
+        }
+    }
+
+    @PutMapping("/updateImagePath")
+    @Operation(summary = "Update Image Path")
+    public ResponseEntity<?> updateImagePath(@RequestBody ImageDataDTO imageDataDTO){
+        try{
+            return ResponseEntity.status(HttpStatus.OK).body(imageService.updateImagePath(imageDataDTO.getId(), imageDataDTO.getPath()));
+        }catch (ImageNotFoundException infe){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(infe.getMessage());
         }
     }
 
