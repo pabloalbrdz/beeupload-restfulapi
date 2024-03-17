@@ -1,6 +1,7 @@
 package com.beeupload.restfulapi.controller;
 
 import com.beeupload.restfulapi.dto.document.DocumentDTO;
+import com.beeupload.restfulapi.dto.document.DocumentDataDTO;
 import com.beeupload.restfulapi.exception.DocumentNotFoundException;
 import com.beeupload.restfulapi.exception.UserNotFoundException;
 import com.beeupload.restfulapi.service.DocumentService;
@@ -28,6 +29,16 @@ public class DocumentController {
             return ResponseEntity.status(HttpStatus.OK).body(documentService.saveDocument(document));
         }catch (UserNotFoundException unfe){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(unfe.getMessage());
+        }
+    }
+
+    @PutMapping("/updateDocumentPath")
+    @Operation(summary = "Update Document Path")
+    public ResponseEntity<?> updateDocumentPath(@RequestBody DocumentDataDTO documentDataDTO){
+        try{
+            return ResponseEntity.status(HttpStatus.OK).body(documentService.updateDocumentPath(documentDataDTO.getId(), documentDataDTO.getPath()));
+        }catch (DocumentNotFoundException dnfe){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(dnfe.getMessage());
         }
     }
 

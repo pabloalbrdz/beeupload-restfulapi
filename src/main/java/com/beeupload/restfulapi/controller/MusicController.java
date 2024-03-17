@@ -1,6 +1,7 @@
 package com.beeupload.restfulapi.controller;
 
 import com.beeupload.restfulapi.dto.music.MusicDTO;
+import com.beeupload.restfulapi.dto.music.MusicDataDTO;
 import com.beeupload.restfulapi.exception.MusicNotFoundException;
 import com.beeupload.restfulapi.exception.UserNotFoundException;
 import com.beeupload.restfulapi.service.MusicService;
@@ -28,6 +29,16 @@ public class MusicController {
             return ResponseEntity.status(HttpStatus.OK).body(musicService.saveMusic(music));
         }catch (UserNotFoundException unfe){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(unfe.getMessage());
+        }
+    }
+
+    @PutMapping("/updateMusicPath")
+    @Operation(summary = "Update Music Path")
+    public ResponseEntity<?> updateMusicPath(@RequestBody MusicDataDTO musicDataDTO){
+        try{
+            return ResponseEntity.status(HttpStatus.OK).body(musicService.updateMusicPath(musicDataDTO.getId(), musicDataDTO.getPath()));
+        }catch (MusicNotFoundException mnfe){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(mnfe.getMessage());
         }
     }
 

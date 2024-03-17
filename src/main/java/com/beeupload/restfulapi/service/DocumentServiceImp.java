@@ -41,6 +41,19 @@ public class DocumentServiceImp implements DocumentService {
     }
 
     @Override
+    public DocumentDataDTO updateDocumentPath(long id, String path) throws DocumentNotFoundException {
+        boolean existDocument = documentRepository.findById(id).isPresent();
+        if (existDocument){
+           Document document = documentRepository.findById(id).get();
+           document.setPath(path);
+           documentRepository.save(document);
+           return new DocumentDataDTO().toDTO(document);
+        }else {
+            throw new DocumentNotFoundException();
+        }
+    }
+
+    @Override
     public List<DocumentDataDTO> getAllUserDocuments(long userid) throws UserNotFoundException {
         boolean existUser = userRepository.findById(userid).isPresent();
         if (existUser){

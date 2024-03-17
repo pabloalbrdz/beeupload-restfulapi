@@ -11,6 +11,8 @@ public interface ImageService {
 
     ImageDataDTO saveImage(ImageDTO imageDTO) throws UserNotFoundException;
 
+    ImageDataDTO updateImagePath(long id, String path) throws ImageNotFoundException;
+
     List<ImageDataDTO> getAllUserImages(long userid) throws UserNotFoundException;
 
     void deleteImage(long id) throws ImageNotFoundException;

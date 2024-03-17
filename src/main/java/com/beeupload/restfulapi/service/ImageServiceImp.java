@@ -41,6 +41,19 @@ public class ImageServiceImp implements ImageService {
     }
 
     @Override
+    public ImageDataDTO updateImagePath(long id, String path) throws ImageNotFoundException {
+        boolean existImage = imageRepository.findById(id).isPresent();
+        if (existImage){
+            Image image = imageRepository.findById(id).get();
+            image.setPath(path);
+            imageRepository.save(image);
+            return new ImageDataDTO().toDTO(image);
+        }else{
+            throw new ImageNotFoundException();
+        }
+    }
+
+    @Override
     public List<ImageDataDTO> getAllUserImages(long userid) throws UserNotFoundException {
         boolean existUser = userRepository.findById(userid).isPresent();
         if (existUser){

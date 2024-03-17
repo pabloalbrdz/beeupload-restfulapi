@@ -11,6 +11,8 @@ public interface VideoService {
 
     VideoDataDTO saveVideo(VideoDTO videoDTO) throws UserNotFoundException;
 
+    VideoDataDTO updateVideoPath(long id, String path) throws VideoNotFoundException;
+
     List<VideoDataDTO> getAllUserVideos(long userid) throws UserNotFoundException;
 
     void deleteVideo(long id) throws VideoNotFoundException;
