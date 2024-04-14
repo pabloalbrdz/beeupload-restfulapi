@@ -1,15 +1,19 @@
 package com.beeupload.restfulapi.service;
 
-import com.beeupload.restfulapi.dto.music.MusicDTO;
-import com.beeupload.restfulapi.dto.music.MusicDataDTO;
-import com.beeupload.restfulapi.exception.MusicNotFoundException;
-import com.beeupload.restfulapi.exception.UserNotFoundException;
-import com.beeupload.restfulapi.model.Music;
-import com.beeupload.restfulapi.model.User;
-import com.beeupload.restfulapi.repository.MusicRepository;
-import com.beeupload.restfulapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.beeupload.restfulapi.model.Music;
+import com.beeupload.restfulapi.model.User;
+
+import com.beeupload.restfulapi.dto.music.MusicDTO;
+import com.beeupload.restfulapi.dto.music.MusicDataDTO;
+
+import com.beeupload.restfulapi.exception.MusicNotFoundException;
+import com.beeupload.restfulapi.exception.UserNotFoundException;
+
+import com.beeupload.restfulapi.repository.MusicRepository;
+import com.beeupload.restfulapi.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -1,6 +1,7 @@
 package com.beeupload.restfulapi.dto.video;
 
 import com.beeupload.restfulapi.model.Video;
+
 import lombok.Data;
 
 @Data

@@ -1,15 +1,19 @@
 package com.beeupload.restfulapi.service;
 
-import com.beeupload.restfulapi.dto.video.VideoDTO;
-import com.beeupload.restfulapi.dto.video.VideoDataDTO;
-import com.beeupload.restfulapi.exception.UserNotFoundException;
-import com.beeupload.restfulapi.exception.VideoNotFoundException;
-import com.beeupload.restfulapi.model.User;
-import com.beeupload.restfulapi.model.Video;
-import com.beeupload.restfulapi.repository.UserRepository;
-import com.beeupload.restfulapi.repository.VideoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.beeupload.restfulapi.model.User;
+import com.beeupload.restfulapi.model.Video;
+
+import com.beeupload.restfulapi.dto.video.VideoDTO;
+import com.beeupload.restfulapi.dto.video.VideoDataDTO;
+
+import com.beeupload.restfulapi.exception.UserNotFoundException;
+import com.beeupload.restfulapi.exception.VideoNotFoundException;
+
+import com.beeupload.restfulapi.repository.UserRepository;
+import com.beeupload.restfulapi.repository.VideoRepository;
 
 import java.util.ArrayList;
 import java.util.Collections;

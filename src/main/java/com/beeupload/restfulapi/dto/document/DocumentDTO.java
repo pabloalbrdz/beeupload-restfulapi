@@ -1,8 +1,8 @@
 package com.beeupload.restfulapi.dto.document;
 
-import com.beeupload.restfulapi.dto.video.VideoDTO;
+
 import com.beeupload.restfulapi.model.Document;
-import com.beeupload.restfulapi.model.Video;
+
 import lombok.Data;
 
 @Data

@@ -1,6 +1,7 @@
 package com.beeupload.restfulapi.dto.image;
 
 import com.beeupload.restfulapi.model.Image;
+
 import lombok.Data;
 
 @Data
