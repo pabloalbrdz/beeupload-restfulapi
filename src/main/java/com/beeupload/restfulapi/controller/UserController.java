@@ -1,17 +1,21 @@
 package com.beeupload.restfulapi.controller;
 
-import com.beeupload.restfulapi.dto.user.UserDTO;
-import com.beeupload.restfulapi.dto.user.UserLoginDTO;
-import com.beeupload.restfulapi.dto.user.UserSignUpDTO;
-import com.beeupload.restfulapi.exception.*;
-import com.beeupload.restfulapi.service.UserService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import com.beeupload.restfulapi.service.UserService;
+
+import com.beeupload.restfulapi.dto.user.UserDTO;
+import com.beeupload.restfulapi.dto.user.UserLoginDTO;
+import com.beeupload.restfulapi.dto.user.UserSignUpDTO;
+
+import com.beeupload.restfulapi.exception.*;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Controller
 @CrossOrigin

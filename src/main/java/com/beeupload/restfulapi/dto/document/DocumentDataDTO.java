@@ -1,8 +1,7 @@
 package com.beeupload.restfulapi.dto.document;
 
-import com.beeupload.restfulapi.dto.image.ImageDataDTO;
 import com.beeupload.restfulapi.model.Document;
-import com.beeupload.restfulapi.model.Image;
+
 import lombok.Data;
 
 import java.util.ArrayList;

@@ -1,15 +1,19 @@
 package com.beeupload.restfulapi.service;
 
-import com.beeupload.restfulapi.dto.document.DocumentDTO;
-import com.beeupload.restfulapi.dto.document.DocumentDataDTO;
-import com.beeupload.restfulapi.exception.DocumentNotFoundException;
-import com.beeupload.restfulapi.exception.UserNotFoundException;
-import com.beeupload.restfulapi.model.Document;
-import com.beeupload.restfulapi.model.User;
-import com.beeupload.restfulapi.repository.DocumentRepository;
-import com.beeupload.restfulapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.beeupload.restfulapi.model.Document;
+import com.beeupload.restfulapi.model.User;
+
+import com.beeupload.restfulapi.dto.document.DocumentDTO;
+import com.beeupload.restfulapi.dto.document.DocumentDataDTO;
+
+import com.beeupload.restfulapi.exception.DocumentNotFoundException;
+import com.beeupload.restfulapi.exception.UserNotFoundException;
+
+import com.beeupload.restfulapi.repository.DocumentRepository;
+import com.beeupload.restfulapi.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.Collections;
