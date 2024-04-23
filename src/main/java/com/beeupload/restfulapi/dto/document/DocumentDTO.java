@@ -5,8 +5,10 @@ import com.beeupload.restfulapi.model.Document;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class DocumentDTO {
+public class DocumentDTO implements Serializable {
 
     private long id;
 

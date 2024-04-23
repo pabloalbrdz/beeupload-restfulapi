@@ -4,11 +4,12 @@ import com.beeupload.restfulapi.model.Music;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class MusicDataDTO {
+public class MusicDataDTO implements Serializable {
 
     private long id;
 

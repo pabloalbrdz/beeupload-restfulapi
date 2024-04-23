@@ -4,8 +4,10 @@ import com.beeupload.restfulapi.model.User;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class UserLoginDTO {
+public class UserLoginDTO implements Serializable {
 
     private String username;
 

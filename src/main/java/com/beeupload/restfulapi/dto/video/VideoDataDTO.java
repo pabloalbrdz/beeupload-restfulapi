@@ -4,11 +4,12 @@ import com.beeupload.restfulapi.model.Video;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class VideoDataDTO {
+public class VideoDataDTO implements Serializable {
 
     private long id;
 
