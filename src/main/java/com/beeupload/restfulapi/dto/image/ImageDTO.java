@@ -4,8 +4,10 @@ import com.beeupload.restfulapi.model.Image;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class ImageDTO {
+public class ImageDTO implements Serializable {
 
     private long id;
 
