@@ -12,6 +12,8 @@ public interface DocumentService {
 
     DocumentDataDTO saveDocument(DocumentDTO documentDTO) throws UserNotFoundException;
 
+    DocumentDataDTO updateDocument(long id, DocumentDataDTO document) throws DocumentNotFoundException;
+
     DocumentDataDTO updateDocumentPath(long id, String path) throws DocumentNotFoundException;
 
     List<DocumentDataDTO> getAllUserDocuments(long userid) throws UserNotFoundException;

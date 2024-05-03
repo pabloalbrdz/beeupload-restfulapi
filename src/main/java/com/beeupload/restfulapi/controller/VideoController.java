@@ -36,6 +36,16 @@ public class VideoController {
         }
     }
 
+    @PutMapping("/updateVideo")
+    @Operation(summary = "Update Video Path")
+    public ResponseEntity<?> updateVideo(@RequestBody VideoDataDTO videoDataDTO){
+        try{
+            return ResponseEntity.status(HttpStatus.OK).body(videoService.updateVideo(videoDataDTO.getId(), videoDataDTO));
+        }catch (VideoNotFoundException vnfe){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(vnfe.getMessage());
+        }
+    }
+
     @PutMapping("/updateVideoPath")
     @Operation(summary = "Update Video Path")
     public ResponseEntity<?> updateVideoPath(@RequestBody VideoDataDTO videoDataDTO){

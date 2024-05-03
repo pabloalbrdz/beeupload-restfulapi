@@ -36,6 +36,16 @@ public class MusicController {
         }
     }
 
+    @PutMapping("/updateMusic")
+    @Operation(summary = "Update Music Path")
+    public ResponseEntity<?> updateMusic(@RequestBody MusicDataDTO musicDataDTO){
+        try{
+            return ResponseEntity.status(HttpStatus.OK).body(musicService.updateMusic(musicDataDTO.getId(), musicDataDTO));
+        }catch (MusicNotFoundException mnfe){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(mnfe.getMessage());
+        }
+    }
+
     @PutMapping("/updateMusicPath")
     @Operation(summary = "Update Music Path")
     public ResponseEntity<?> updateMusicPath(@RequestBody MusicDataDTO musicDataDTO){
