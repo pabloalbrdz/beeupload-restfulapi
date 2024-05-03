@@ -36,6 +36,16 @@ public class DocumentController {
         }
     }
 
+    @PutMapping("/updateDocument")
+    @Operation(summary = "Update Document")
+    public ResponseEntity<?> updateDocument(@RequestBody DocumentDataDTO documentDataDTO){
+        try{
+            return ResponseEntity.status(HttpStatus.OK).body(documentService.updateDocument(documentDataDTO.getId(), documentDataDTO));
+        }catch (DocumentNotFoundException dnfe){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(dnfe.getMessage());
+        }
+    }
+
     @PutMapping("/updateDocumentPath")
     @Operation(summary = "Update Document Path")
     public ResponseEntity<?> updateDocumentPath(@RequestBody DocumentDataDTO documentDataDTO){

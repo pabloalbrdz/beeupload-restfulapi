@@ -45,6 +45,19 @@ public class VideoServiceImp implements VideoService {
     }
 
     @Override
+    public VideoDataDTO updateVideo(long id, VideoDataDTO video) throws VideoNotFoundException {
+        boolean existVideo = videoRepository.findById(id).isPresent();
+        if (existVideo){
+            Video videoUpdated = videoRepository.findById(id).get();
+            videoUpdated.setName(video.getName());
+            videoRepository.save(videoUpdated);
+            return new VideoDataDTO().toDTO(videoUpdated);
+        }else{
+            throw new VideoNotFoundException();
+        }
+    }
+
+    @Override
     public VideoDataDTO updateVideoPath(long id, String path) throws VideoNotFoundException {
         boolean existVideo = videoRepository.findById(id).isPresent();
         if (existVideo){
