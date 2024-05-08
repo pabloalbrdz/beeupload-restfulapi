@@ -37,39 +37,6 @@ public class UserServiceImp implements UserService {
     VideoService videoService;
 
     @Override
-    public UserLoginDTO login(UserLoginDTO user) throws UserLoginNotFoundException, Exception {
-        boolean existUser = userRepository.findUserByUsernameAndPassword(user.getUsername(), passwordEncrypt.encrypt(user.getPassword())).isPresent();
-        if (existUser){
-            return new UserLoginDTO().toDTO(userRepository.findUserByUsernameAndPassword(user.getUsername(), passwordEncrypt.encrypt(user.getPassword())).get());
-        }else{
-            throw new UserLoginNotFoundException();
-        }
-    }
-
-    @Override
-    public UserSignUpDTO signUp(UserSignUpDTO user) throws UsernameAndEmailExistsException, UsernameExistsException, EmailExistsException, Exception {
-        boolean existUsername = userRepository.findUserByUsername(user.getUsername()).isPresent();
-        boolean existEmail = userRepository.findUserByEmail(user.getEmail()).isPresent();
-        if (existUsername && existEmail){
-            throw new UsernameAndEmailExistsException();
-        }
-        if (existUsername){
-            throw new UsernameExistsException();
-        }
-        if (existEmail){
-            throw new EmailExistsException();
-        }
-        user.setPassword(passwordEncrypt.encrypt(user.getPassword()));
-        User model = userRepository.save(user.toModel());
-        return new UserSignUpDTO().toDTO(model);
-    }
-
-    @Override
-    public UserDTO getUserLog(UserLoginDTO user) {
-        return new UserDTO().toDTO(userRepository.findUserByUsername(user.getUsername()).get());
-    }
-
-    @Override
     public String getUserUsername(long id) throws UserNotFoundException {
         String username = userRepository.findUsernameById(id);
         if (username == null){

@@ -7,13 +7,6 @@ import com.beeupload.restfulapi.dto.user.UserSignUpDTO;
 import com.beeupload.restfulapi.exception.*;
 
 public interface UserService {
-
-    UserLoginDTO login(UserLoginDTO user) throws UserLoginNotFoundException, Exception;
-
-    UserSignUpDTO signUp(UserSignUpDTO user) throws UsernameExistsException, EmailExistsException, UsernameAndEmailExistsException, Exception;
-
-    UserDTO getUserLog(UserLoginDTO user);
-
     String getUserUsername(long id) throws UserNotFoundException;
 
     UserDTO updateUserUsername(long id, String newUsername) throws UserNotFoundException, UsernameExistsException;

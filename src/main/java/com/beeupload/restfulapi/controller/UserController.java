@@ -26,32 +26,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/login")
-    @Operation(summary = "User Login")
-    public ResponseEntity<?> login(@RequestBody UserLoginDTO account) throws Exception{
-        try{
-            UserLoginDTO user = userService.login(account);
-            return ResponseEntity.status(HttpStatus.OK).body(userService.getUserLog(user));
-        }catch (UserLoginNotFoundException unf){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(unf.getMessage());
-        }
-    }
-
-    @PostMapping("/signup")
-    @Operation(summary = "User Sign Up")
-    public ResponseEntity<?> signUp(@RequestBody UserSignUpDTO account) throws Exception{
-        try{
-            UserSignUpDTO user = userService.signUp(account);
-            return ResponseEntity.status(HttpStatus.OK).body(user);
-        }catch (UsernameAndEmailExistsException ueee){
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(ueee.getMessage());
-        }catch (UsernameExistsException uee){
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(uee.getMessage());
-        }catch (EmailExistsException eee){
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(eee.getMessage());
-        }
-    }
-
     @GetMapping("/getUserUsername/{id}")
     @Operation(summary = "Get User Username By Id")
     public ResponseEntity<String> getUserUsername(@PathVariable long id) throws Exception{
