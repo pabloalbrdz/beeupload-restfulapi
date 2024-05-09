@@ -1,13 +1,16 @@
 package com.beeupload.restfulapi.jwt;
 
+import com.beeupload.restfulapi.exception.NoAccessException;
 import com.beeupload.restfulapi.model.User;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
+import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,6 +38,32 @@ public class JwtServiceImp implements JwtService {
     private Key getKey(){
         byte[] getBytes = Decoders.BASE64.decode(SECRET_KEY);
         return Keys.hmacShaKeyFor(getBytes);
+    }
+
+    @Override
+    public boolean verifyUserToken(long id, String token) throws NoAccessException {
+        try{
+            long tokenId = tokenUserId(token);
+            if (id == tokenId){
+                return true;
+            }else{
+                throw new NoAccessException();
+            }
+        }catch (Exception e){
+            throw new NoAccessException();
+        }
+    }
+
+    private long tokenUserId(String token){
+        try{
+            String[] chunks = token.split("\\.");
+            Base64.Decoder decoder = Base64.getUrlDecoder();
+            String payload = new String(decoder.decode(chunks[1]));
+            JSONObject payloadJSON = new JSONObject(payload);
+            return payloadJSON.getLong("sub");
+        }catch (Exception e){
+            return -1;
+        }
     }
 
 }
