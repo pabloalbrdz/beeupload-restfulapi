@@ -55,11 +55,11 @@ public class AuthController {
     @GetMapping("/verifyusertoken/{id}/{token}")
     @Operation(summary = "Check Id & Token Id (only test)")
     public ResponseEntity<?> verifyUserToken(@RequestParam long id, @RequestParam String token){
-        try{
-            boolean verifyResult = jwtService.verifyUserToken(id, token);
+        boolean verifyResult = jwtService.verifyUserToken(id, token);
+        if (verifyResult){
             return ResponseEntity.status(HttpStatus.OK).body(verifyResult);
-        }catch (NoAccessException nae){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(nae.getMessage());
+        }else{
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(verifyResult);
         }
     }
 

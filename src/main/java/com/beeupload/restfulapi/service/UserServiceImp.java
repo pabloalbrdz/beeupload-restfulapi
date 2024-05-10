@@ -1,5 +1,6 @@
 package com.beeupload.restfulapi.service;
 
+import com.beeupload.restfulapi.jwt.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +37,9 @@ public class UserServiceImp implements UserService {
     @Autowired
     VideoService videoService;
 
+    @Autowired
+    JwtService jwtService;
+
     @Override
     public String getUserUsername(long id) throws UserNotFoundException {
         String username = userRepository.findUsernameById(id);
@@ -46,7 +50,7 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public UserDTO updateUserUsername(long id, String newUsername) throws UserNotFoundException, UsernameExistsException {
+    public UserDTO updateUserUsername(long id, String newUsername, String token) throws UserNotFoundException, UsernameExistsException, NoAccessException {
         boolean userIdAvaiable = userRepository.findById(id).isPresent();
         if (!userIdAvaiable){
             throw new UserNotFoundException();
@@ -56,16 +60,24 @@ public class UserServiceImp implements UserService {
             throw new UsernameExistsException();
         }
         User user = userRepository.findById(id).get();
+        boolean authorized = jwtService.verifyUserToken(id, token);
+        if (!authorized){
+            throw new NoAccessException();
+        }
         user.setUsername(newUsername);
         userRepository.save(user);
         return new UserDTO().toDTO(user);
     }
 
     @Override
-    public String getUserPassword(long id) throws UserNotFoundException {
+    public String getUserPassword(long id, String token) throws UserNotFoundException, NoAccessException {
         String password = userRepository.findPasswordById(id);
         if (password == null){
             throw new UserNotFoundException();
+        }
+        boolean authorized = jwtService.verifyUserToken(id, token);
+        if (!authorized){
+            throw new NoAccessException();
         }
         return password;
     }
@@ -84,28 +96,36 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public UserDTO updateUserPassword(long id, String newPassword) throws UserNotFoundException, Exception {
+    public UserDTO updateUserPassword(long id, String newPassword, String token) throws UserNotFoundException, Exception, NoAccessException {
         boolean userIdAvaiable = userRepository.findById(id).isPresent();
         if (!userIdAvaiable){
             throw new UserNotFoundException();
         }
         User user = userRepository.findById(id).get();
+        boolean authorized = jwtService.verifyUserToken(id, token);
+        if (!authorized){
+            throw new NoAccessException();
+        }
         user.setPassword(passwordEncrypt.encrypt(newPassword));
         userRepository.save(user);
         return new UserDTO().toDTO(user);
     }
 
     @Override
-    public String getUserEmail(long id) throws UserNotFoundException {
+    public String getUserEmail(long id, String token) throws UserNotFoundException, NoAccessException {
         String email = userRepository.findEmailById(id);
         if (email == null){
             throw new UserNotFoundException();
+        }
+        boolean authorized = jwtService.verifyUserToken(id, token);
+        if (!authorized){
+            throw new NoAccessException();
         }
         return email;
     }
 
     @Override
-    public UserDTO updateUserEmail(long id, String newEmail) throws UserNotFoundException, EmailExistsException {
+    public UserDTO updateUserEmail(long id, String newEmail, String token) throws UserNotFoundException, EmailExistsException, NoAccessException {
         boolean userIdAvaiable = userRepository.findById(id).isPresent();
         if (!userIdAvaiable){
             throw new UserNotFoundException();
@@ -115,21 +135,29 @@ public class UserServiceImp implements UserService {
             throw new EmailExistsException();
         }
         User user = userRepository.findById(id).get();
+        boolean authorized = jwtService.verifyUserToken(id, token);
+        if (!authorized){
+            throw new NoAccessException();
+        }
         user.setEmail(newEmail);
         userRepository.save(user);
         return new UserDTO().toDTO(user);
     }
 
     @Override
-    public void deleteUser(long id) throws UserNotFoundException, DocumentNotFoundException, ImageNotFoundException, MusicNotFoundException, VideoNotFoundException {
+    public void deleteUser(long id, String token) throws UserNotFoundException, DocumentNotFoundException, ImageNotFoundException, MusicNotFoundException, VideoNotFoundException, NoAccessException {
         boolean userIdAvaiable = userRepository.findById(id).isPresent();
         if (!userIdAvaiable){
             throw new UserNotFoundException();
         }
-        documentService.deleteAllUserDocuments(id);
-        imageService.deleteAllUserImages(id);
-        musicService.deleteAllUserMusic(id);
-        videoService.deleteAllUserVideos(id);
+        documentService.deleteAllUserDocuments(id, token);
+        imageService.deleteAllUserImages(id, token);
+        musicService.deleteAllUserMusic(id, token);
+        videoService.deleteAllUserVideos(id, token);
+        boolean authorized = jwtService.verifyUserToken(id, token);
+        if (!authorized){
+            throw new NoAccessException();
+        }
         userRepository.deleteById(id);
     }
 

@@ -1,5 +1,6 @@
 package com.beeupload.restfulapi.controller;
 
+import com.beeupload.restfulapi.exception.NoAccessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,65 +29,77 @@ public class DocumentController {
 
     @PostMapping("/saveDocument")
     @Operation(summary = "Save Document")
-    public ResponseEntity<?> saveDocument(@RequestBody DocumentDTO document){
+    public ResponseEntity<?> saveDocument(@RequestBody DocumentDTO document, @RequestHeader("Auth") String token){
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(documentService.saveDocument(document));
+            return ResponseEntity.status(HttpStatus.OK).body(documentService.saveDocument(document, token));
         }catch (UserNotFoundException unfe){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(unfe.getMessage());
+        }catch (NoAccessException nae){
+            return  ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(nae.getMessage());
         }
     }
 
     @PutMapping("/updateDocument")
     @Operation(summary = "Update Document")
-    public ResponseEntity<?> updateDocument(@RequestBody DocumentDataDTO documentDataDTO){
+    public ResponseEntity<?> updateDocument(@RequestBody DocumentDataDTO documentDataDTO, @RequestHeader("Auth") String token){
         try{
-            return ResponseEntity.status(HttpStatus.OK).body(documentService.updateDocument(documentDataDTO.getId(), documentDataDTO));
+            return ResponseEntity.status(HttpStatus.OK).body(documentService.updateDocument(documentDataDTO.getId(), documentDataDTO, token));
         }catch (DocumentNotFoundException dnfe){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(dnfe.getMessage());
+        }catch (NoAccessException nae){
+            return  ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(nae.getMessage());
         }
     }
 
     @PutMapping("/updateDocumentPath")
     @Operation(summary = "Update Document Path")
-    public ResponseEntity<?> updateDocumentPath(@RequestBody DocumentDataDTO documentDataDTO){
+    public ResponseEntity<?> updateDocumentPath(@RequestBody DocumentDataDTO documentDataDTO, @RequestHeader("Auth") String token){
         try{
-            return ResponseEntity.status(HttpStatus.OK).body(documentService.updateDocumentPath(documentDataDTO.getId(), documentDataDTO.getPath()));
+            return ResponseEntity.status(HttpStatus.OK).body(documentService.updateDocumentPath(documentDataDTO.getId(), documentDataDTO.getPath(), token));
         }catch (DocumentNotFoundException dnfe){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(dnfe.getMessage());
+        }catch (NoAccessException nae){
+            return  ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(nae.getMessage());
         }
     }
 
     @GetMapping("/getAllDocumentsById/{userid}")
     @Operation(summary = "Get All Documents By User Id")
-    public ResponseEntity<?> getAllUserDocuments(@PathVariable long userid){
+    public ResponseEntity<?> getAllUserDocuments(@PathVariable long userid, @RequestHeader("Auth") String token){
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(documentService.getAllUserDocuments(userid));
+            return ResponseEntity.status(HttpStatus.OK).body(documentService.getAllUserDocuments(userid, token));
         }catch (UserNotFoundException unfe){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(unfe.getMessage());
+        }catch (NoAccessException nae){
+            return  ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(nae.getMessage());
         }
     }
 
     @DeleteMapping("/deleteDocument/{id}")
     @Operation(summary = "Delete Document By Id")
-    public ResponseEntity<?> deleteDocument(@PathVariable long id){
+    public ResponseEntity<?> deleteDocument(@PathVariable long id, @RequestHeader("Auth") String token){
         try {
-            documentService.deleteDocument(id);
+            documentService.deleteDocument(id, token);
             return ResponseEntity.status(HttpStatus.OK).build();
         }catch (DocumentNotFoundException dnfe){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(dnfe.getMessage());
+        }catch (NoAccessException nae){
+            return  ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(nae.getMessage());
         }
     }
 
     @DeleteMapping("/deleteAllUserDocuments/{userid}")
     @Operation(summary = "Delete All Documents By User Id")
-    public ResponseEntity<?> deleteAllUserDocuments(@PathVariable long userid){
+    public ResponseEntity<?> deleteAllUserDocuments(@PathVariable long userid, @RequestHeader("Auth") String token){
         try {
-            documentService.deleteAllUserDocuments(userid);
+            documentService.deleteAllUserDocuments(userid, token);
             return ResponseEntity.status(HttpStatus.OK).build();
         }catch (UserNotFoundException unfe){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(unfe.getMessage());
         }catch (DocumentNotFoundException dnfe){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(dnfe.getMessage());
+        }catch (NoAccessException nae){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(nae.getMessage());
         }
     }
 

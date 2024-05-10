@@ -9,18 +9,18 @@ import com.beeupload.restfulapi.exception.*;
 public interface UserService {
     String getUserUsername(long id) throws UserNotFoundException;
 
-    UserDTO updateUserUsername(long id, String newUsername) throws UserNotFoundException, UsernameExistsException;
+    UserDTO updateUserUsername(long id, String newUsername, String token) throws UserNotFoundException, UsernameExistsException, NoAccessException;
 
-    String getUserPassword(long id) throws UserNotFoundException;
+    String getUserPassword(long id, String token) throws UserNotFoundException, NoAccessException;
 
     boolean checkUserPassword(long id, String password) throws UserNotFoundException, Exception;
 
-    UserDTO updateUserPassword(long id, String newPassword) throws UserNotFoundException, Exception;
+    UserDTO updateUserPassword(long id, String newPassword, String token) throws UserNotFoundException, Exception, NoAccessException;
 
-    String getUserEmail(long id) throws UserNotFoundException;
+    String getUserEmail(long id, String token) throws UserNotFoundException, NoAccessException;
 
-    UserDTO updateUserEmail(long id, String newEmail) throws UserNotFoundException, EmailExistsException;
+    UserDTO updateUserEmail(long id, String newEmail, String token) throws UserNotFoundException, EmailExistsException, NoAccessException;
 
-    void deleteUser(long id) throws UserNotFoundException, DocumentNotFoundException, ImageNotFoundException, MusicNotFoundException, VideoNotFoundException;
+    void deleteUser(long id, String token) throws UserNotFoundException, DocumentNotFoundException, ImageNotFoundException, MusicNotFoundException, VideoNotFoundException, NoAccessException;
 
 }

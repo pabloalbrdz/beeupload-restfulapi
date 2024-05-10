@@ -41,16 +41,16 @@ public class JwtServiceImp implements JwtService {
     }
 
     @Override
-    public boolean verifyUserToken(long id, String token) throws NoAccessException {
+    public boolean verifyUserToken(long id, String token) {
         try{
             long tokenId = tokenUserId(token);
             if (id == tokenId){
                 return true;
             }else{
-                throw new NoAccessException();
+                return false;
             }
         }catch (Exception e){
-            throw new NoAccessException();
+            return false;
         }
     }
 

@@ -38,24 +38,28 @@ public class UserController {
 
     @PutMapping("/updateUserUsername/{id}/{newUsername}")
     @Operation(summary = "Update User Username By Id")
-    public ResponseEntity<?> updateUserUsername(@PathVariable long id, @PathVariable String newUsername) throws Exception{
+    public ResponseEntity<?> updateUserUsername(@PathVariable long id, @PathVariable String newUsername, @RequestHeader("Auth") String token) throws Exception{
         try{
-            UserDTO user = userService.updateUserUsername(id, newUsername);
+            UserDTO user = userService.updateUserUsername(id, newUsername, token);
             return ResponseEntity.status(HttpStatus.OK).body(user);
         }catch (UserNotFoundException unfe){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(unfe.getMessage());
         }catch (UsernameExistsException uee){
             return ResponseEntity.status(HttpStatus.CONFLICT).body(uee.getMessage());
+        }catch (NoAccessException nae){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(nae.getMessage());
         }
     }
 
     @GetMapping("/getUserPassword/{id}")
     @Operation(summary = "Get User Password By Id")
-    public ResponseEntity<String> getUserPassword(@PathVariable long id) throws Exception{
+    public ResponseEntity<String> getUserPassword(@PathVariable long id, @RequestHeader("Auth") String token) throws Exception{
         try{
-            return ResponseEntity.status(HttpStatus.OK).body(userService.getUserPassword(id));
+            return ResponseEntity.status(HttpStatus.OK).body(userService.getUserPassword(id, token));
         }catch (UserNotFoundException unfe){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(unfe.getMessage());
+        }catch (NoAccessException nae){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(nae.getMessage());
         }
     }
 
@@ -72,43 +76,49 @@ public class UserController {
 
     @PutMapping("/updateUserPassword/{id}/{newPassword}")
     @Operation(summary = "Update User Password By Id")
-    public ResponseEntity<?> updateUserPassword(@PathVariable long id, @PathVariable String newPassword) throws Exception{
+    public ResponseEntity<?> updateUserPassword(@PathVariable long id, @PathVariable String newPassword, @RequestHeader("Auth") String token) throws Exception{
         try{
-            UserDTO user = userService.updateUserPassword(id, newPassword);
+            UserDTO user = userService.updateUserPassword(id, newPassword, token);
             return ResponseEntity.status(HttpStatus.OK).body(user);
         }catch (UserNotFoundException unfe){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(unfe.getMessage());
+        }catch (NoAccessException nae){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(nae.getMessage());
         }
     }
 
     @GetMapping("/getUserEmail/{id}")
     @Operation(summary = "Get User Email By Id")
-    public ResponseEntity<String> getUserEmail(@PathVariable long id) throws Exception{
+    public ResponseEntity<String> getUserEmail(@PathVariable long id, @RequestHeader("Auth") String token) throws Exception{
         try{
-            return ResponseEntity.status(HttpStatus.OK).body(userService.getUserEmail(id));
+            return ResponseEntity.status(HttpStatus.OK).body(userService.getUserEmail(id, token));
         }catch (UserNotFoundException unfe){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(unfe.getMessage());
+        }catch (NoAccessException nae){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(nae.getMessage());
         }
     }
 
     @PutMapping("/updateUserEmail/{id}/{newEmail}")
     @Operation(summary = "Update User Email By Id")
-    public ResponseEntity<?> updateUserEmail(@PathVariable long id, @PathVariable String newEmail) throws Exception{
+    public ResponseEntity<?> updateUserEmail(@PathVariable long id, @PathVariable String newEmail, @RequestHeader("Auth") String token) throws Exception{
         try{
-            UserDTO user = userService.updateUserEmail(id, newEmail);
+            UserDTO user = userService.updateUserEmail(id, newEmail, token);
             return ResponseEntity.status(HttpStatus.OK).body(user);
         }catch (UserNotFoundException unfe){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(unfe.getMessage());
         }catch (EmailExistsException eee){
             return ResponseEntity.status(HttpStatus.CONFLICT).body(eee.getMessage());
+        }catch (NoAccessException nae){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(nae.getMessage());
         }
     }
 
     @DeleteMapping("/deleteUser/{id}")
     @Operation(summary = "Delete User By Id")
-    public ResponseEntity<?> deleteUser(@PathVariable long id) throws Exception{
+    public ResponseEntity<?> deleteUser(@PathVariable long id, @RequestHeader("Auth") String token) throws Exception{
         try{
-            userService.deleteUser(id);
+            userService.deleteUser(id, token);
             return ResponseEntity.status(HttpStatus.OK).build();
         }catch (UserNotFoundException unfe){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(unfe.getMessage());
@@ -120,6 +130,8 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(mnfe.getMessage());
         }catch (VideoNotFoundException vnfe){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(vnfe.getMessage());
+        }catch (NoAccessException nae){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(nae.getMessage());
         }
     }
 
