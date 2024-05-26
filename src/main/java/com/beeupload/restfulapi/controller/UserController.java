@@ -36,7 +36,7 @@ public class UserController {
         }
     }
 
-    @PutMapping("/updateUserUsername/{id}/{newUsername}")
+    @PatchMapping("/updateUserUsername/{id}/{newUsername}")
     @Operation(summary = "Update User Username By Id")
     public ResponseEntity<?> updateUserUsername(@PathVariable long id, @PathVariable String newUsername, @RequestHeader("Auth") String token) throws Exception{
         try{
@@ -74,7 +74,7 @@ public class UserController {
         }
     }
 
-    @PutMapping("/updateUserPassword/{id}/{newPassword}")
+    @PatchMapping("/updateUserPassword/{id}/{newPassword}")
     @Operation(summary = "Update User Password By Id")
     public ResponseEntity<?> updateUserPassword(@PathVariable long id, @PathVariable String newPassword, @RequestHeader("Auth") String token) throws Exception{
         try{
@@ -99,7 +99,7 @@ public class UserController {
         }
     }
 
-    @PutMapping("/updateUserEmail/{id}/{newEmail}")
+    @PatchMapping("/updateUserEmail/{id}/{newEmail}")
     @Operation(summary = "Update User Email By Id")
     public ResponseEntity<?> updateUserEmail(@PathVariable long id, @PathVariable String newEmail, @RequestHeader("Auth") String token) throws Exception{
         try{
